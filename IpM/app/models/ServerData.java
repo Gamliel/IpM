@@ -9,6 +9,7 @@ import play.data.validation.Constraints.Pattern;
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
 
+
 @SuppressWarnings("serial")
 @Entity
 public class ServerData extends Model{
@@ -30,5 +31,7 @@ public class ServerData extends Model{
 	
 	@Required
 	public String ipAddress;
+	
+	public static Model.Finder<String, ServerData> find = new Model.Finder<String, ServerData>(String.class, ServerData.class);
 	
 }

@@ -1,11 +1,15 @@
 package controllers;
 
+import static play.data.Form.form;
+
+import java.util.List;
+
 import models.ServerData;
 import play.data.Form;
-import static play.data.Form.form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.index;
+import views.html.showAllServerData;
 
 public class Application extends Controller {
 
@@ -21,6 +25,7 @@ public class Application extends Controller {
     }
     
     public static Result showAllServerData(){
-    	return ok();
+    	List<ServerData> allServerData = ServerData.find.all();
+		return ok(showAllServerData.render(allServerData));
     }
 }

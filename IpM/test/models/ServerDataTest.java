@@ -1,10 +1,10 @@
 package models;
 
-import org.junit.Test;
-
-import static play.test.Helpers.fakeApplication;
 import static org.fest.assertions.Assertions.assertThat;
+import static play.test.Helpers.fakeApplication;
 import static play.test.Helpers.running;
+
+import org.junit.Test;
 
 public class ServerDataTest {
 	

@@ -1,0 +1,7 @@
+@(allServerData: List[ServerData])
+ 
+<ul> 
+@allServerData.map { serverData =>
+  <li>@serverData.hostname.@serverData.domain:@serverData.port \<@serverData.ipAddress\></li>
+} 
+</ul>
