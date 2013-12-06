@@ -5,6 +5,7 @@ import javax.persistence.Id;
 
 import play.data.validation.Constraints.Max;
 import play.data.validation.Constraints.Min;
+import play.data.validation.Constraints.Pattern;
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
 
@@ -24,6 +25,7 @@ public class ServerData extends Model{
 	@Required
 	@Min(0)
 	@Max(65535)
+	@Pattern("\\d")
 	public Integer port;
 	
 	@Required
