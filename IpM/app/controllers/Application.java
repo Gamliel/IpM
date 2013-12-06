@@ -19,4 +19,8 @@ public class Application extends Controller {
         serverData.save();
         return redirect(routes.Application.addServerData());
     }
+    
+    public static Result showAllServerData(){
+    	return ok();
+    }
 }
