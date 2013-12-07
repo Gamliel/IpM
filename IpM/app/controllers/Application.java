@@ -10,6 +10,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.index;
 import views.html.showAllServerData;
+import views.html.addServerDataForm;
 
 public class Application extends Controller {
 
@@ -21,9 +22,12 @@ public class Application extends Controller {
         Form<ServerData> formData = form(ServerData.class).bindFromRequest();
         ServerData serverData = formData.get();
         serverData.save();
-        return redirect(routes.Application.index());
+        return redirect(routes.Application.addServerDataForm());
     }
     
+    public static Result addServerDataForm() {
+        return ok(addServerDataForm.render(""));
+    }
     public static Result showAllServerData(){
     	List<ServerData> allServerData = ServerData.find.all();
 		return ok(showAllServerData.render(allServerData));

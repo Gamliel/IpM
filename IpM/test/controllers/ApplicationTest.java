@@ -15,7 +15,6 @@ import static play.test.Helpers.testServer;
 import models.ServerData;
 import models.ServerDataTest;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import play.libs.F.Callback;
@@ -80,8 +79,13 @@ public class ApplicationTest {
     public void pageDisplaysForm() {
         running(testServer(9000, fakeApplication(inMemoryDatabase())), HTMLUNIT, new Callback<TestBrowser>() {
             public void invoke(TestBrowser browser) {
-                browser.goTo("http://localhost:9000");
+                browser.goTo("http://localhost:9000/addServerDataForm");
                 assertThat(browser.pageSource()).contains("conventionalName");
+                assertThat(browser.pageSource()).contains("hostName");
+                assertThat(browser.pageSource()).contains("domain");
+                assertThat(browser.pageSource()).contains("port");
+                assertThat(browser.pageSource()).contains("ipAddress");
+                assertThat(browser.pageSource()).contains("submit");
             }
         });
     }
