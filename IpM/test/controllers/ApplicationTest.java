@@ -16,6 +16,8 @@ import models.ServerData;
 import models.ServerDataTest;
 
 import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import play.libs.F.Callback;
 import play.mvc.Result;
@@ -83,12 +85,27 @@ public class ApplicationTest {
         running(testServer(9000, fakeApplication(inMemoryDatabase())), HTMLUNIT, new Callback<TestBrowser>() {
             public void invoke(TestBrowser browser) {
                 browser.goTo("http://localhost:9000/addServerDataForm");
+
                 assertThat(browser.pageSource()).contains("conventionalName");
                 assertThat(browser.pageSource()).contains("hostName");
                 assertThat(browser.pageSource()).contains("domain");
                 assertThat(browser.pageSource()).contains("port");
                 assertThat(browser.pageSource()).contains("ipAddress");
                 assertThat(browser.pageSource()).contains("submit");
+                
+                WebElement conventionalName  = browser.getDriver().findElement(By.name("conventionalName"));
+                WebElement hostName  = browser.getDriver().findElement(By.name("hostName"));
+                WebElement domain  = browser.getDriver().findElement(By.name("domain"));
+                WebElement port  = browser.getDriver().findElement(By.name("port"));
+                WebElement ipAddress  = browser.getDriver().findElement(By.name("ipAddress"));
+                WebElement submitButton  = browser.getDriver().findElement(By.name("submitButton"));
+                
+                assertThat(conventionalName).isNotNull();
+                assertThat(hostName).isNotNull();
+                assertThat(domain).isNotNull();
+                assertThat(port).isNotNull();
+                assertThat(ipAddress).isNotNull();
+                assertThat(submitButton).isNotNull();
             }
         });
     }
