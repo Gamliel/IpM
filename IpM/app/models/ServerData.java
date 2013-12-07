@@ -15,7 +15,7 @@ import play.db.ebean.Model;
 public class ServerData extends Model{
 
 	@Id
-	public String Id;
+	public String id;
 	
 	@Required
 	public String conventionalName;

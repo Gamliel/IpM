@@ -34,7 +34,9 @@ public class Application extends Controller {
 		return ok(showAllServerData.render(allServerData));
     }
     
-    public static Result deleteServerData(){
-    	return ok();
+    public static Result deleteServerData(String id){
+    	ServerData serverData= ServerData.find.where().idEq(id).findUnique();
+    	serverData.delete();    	
+    	return redirect(routes.Application.showAllServerData());
     }
 }

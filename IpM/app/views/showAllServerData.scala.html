@@ -3,8 +3,8 @@
 <ul> 
 @allServerData.map { serverData =>
   <li>"@serverData.conventionalName" is "@serverData.hostName.@serverData.domain:@serverData.port" <@serverData.ipAddress> 
-  @helper.form(action = routes.Application.deleteServerData()) {
-        <input name="deleteButton" type="submit"/>
+  @helper.form(action = routes.Application.deleteServerData(serverData.id)) {
+        <input name="deleteButton" type="submit" value="Delete"/>
     }    
   </li>
 } 

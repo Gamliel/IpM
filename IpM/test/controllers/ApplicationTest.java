@@ -3,6 +3,7 @@ package controllers;
 import static org.fest.assertions.Assertions.assertThat;
 import static play.mvc.Http.Status.OK;
 import static play.test.Helpers.HTMLUNIT;
+import static play.test.Helpers.FIREFOX;
 import static play.test.Helpers.callAction;
 import static play.test.Helpers.charset;
 import static play.test.Helpers.contentAsString;
@@ -12,6 +13,9 @@ import static play.test.Helpers.inMemoryDatabase;
 import static play.test.Helpers.running;
 import static play.test.Helpers.status;
 import static play.test.Helpers.testServer;
+
+import javax.swing.text.html.HTML;
+
 import models.ServerData;
 import models.ServerDataTest;
 
@@ -174,7 +178,7 @@ public class ApplicationTest {
 
     @Test
     public void iCanAddServerDataThroughTheFormAndDeleteIt() {
-        running(testServer(9000, fakeApplication(inMemoryDatabase())), HTMLUNIT, new Callback<TestBrowser>() {
+        running(testServer(9000, fakeApplication(inMemoryDatabase())), HTMLUNIT , new Callback<TestBrowser>() {
             public void invoke(TestBrowser browser) {
             	String stage1 = "UAT 1";
             	String yellowStar = "brightStar";
@@ -191,8 +195,16 @@ public class ApplicationTest {
                 assertThat(browser.pageSource()).contains("deleteButton");
                 WebElement deleteButton = browser.getDriver().findElement(By.name("deleteButton"));
                 assertThat(deleteButton).isNotNull();
+                deleteButton.click();
+                
+                assertThat(browser.getDriver().getCurrentUrl()).contains("showAllServerData");
+                
+                assertThat(browser.pageSource()).doesNotContain(stage1);
+                assertThat(browser.pageSource()).doesNotContain(yellowStar);
+                assertThat(browser.pageSource()).doesNotContain(m37Ga);
+                assertThat(browser.pageSource()).doesNotContain(commonPort);
+                assertThat(browser.pageSource()).doesNotContain(commonIP);
             }
-
         });
     }
 }

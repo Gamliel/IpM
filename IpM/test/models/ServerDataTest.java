@@ -33,7 +33,7 @@ public class ServerDataTest {
         		ServerData serverData = storeServerData(conventionalName, hostName, domain,
 						portNumber, ipAddress);
         		
-        		assertThat(serverData.Id).isNotNull();
+        		assertThat(serverData.id).isNotNull();
         		assertThat(serverData.hostName).isEqualTo(hostName);
         		assertThat(serverData.domain).isEqualTo(domain);
         		assertThat(serverData.port).isEqualTo(portNumber);
