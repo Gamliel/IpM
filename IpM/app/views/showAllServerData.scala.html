@@ -2,6 +2,10 @@
  
 <ul> 
 @allServerData.map { serverData =>
-  <li>"@serverData.conventionalName" is "@serverData.hostName.@serverData.domain:@serverData.port" <@serverData.ipAddress></li>
+  <li>"@serverData.conventionalName" is "@serverData.hostName.@serverData.domain:@serverData.port" <@serverData.ipAddress> 
+  @helper.form(action = routes.Application.deleteServerData()) {
+        <input name="deleteButton" type="submit"/>
+    }    
+  </li>
 } 
 </ul>

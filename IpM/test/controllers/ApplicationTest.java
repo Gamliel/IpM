@@ -85,12 +85,15 @@ public class ApplicationTest {
 				String ipAddress1 = "12.13.14.15";
 				ServerData serverData1 = ServerDataTest.storeServerData(
 						conventionalName1, hostName1, domain, portNumber1, ipAddress1);
+				
 				String conventionalName2 = "UAT_2";
 				String hostName2 = "redStar";
 				String ipAddress2 = "12.17.14.15";
 				int portNumber2 = 2222;
+				
 				ServerData serverData2 = ServerDataTest.storeServerData(
 						conventionalName2, hostName2, domain, portNumber2, ipAddress2);
+				
 				Result result = callAction(controllers.routes.ref.Application
 						.showAllServerData());
 				assertThat(contentType(result)).isEqualTo("text/html");
@@ -164,6 +167,28 @@ public class ApplicationTest {
                 
                 checkServerDataIsShown(browser, stage1, yellowStar, m37Ga,
 						commonPort, commonIP);
+            }
+
+        });
+    }
+
+    @Test
+    public void iCanAddServerDataThroughTheFormAndDeleteIt() {
+        running(testServer(9000, fakeApplication(inMemoryDatabase())), HTMLUNIT, new Callback<TestBrowser>() {
+            public void invoke(TestBrowser browser) {
+            	String stage1 = "UAT 1";
+            	String yellowStar = "brightStar";
+            	String m37Ga = "milkyway.ga";
+            	String commonPort = "12332";
+            	String commonIP = "23.45.23.11";
+
+            	addServerDataThroughTheForm(browser, stage1, yellowStar, m37Ga,
+						commonPort, commonIP);
+                
+                checkServerDataIsShown(browser, stage1, yellowStar, m37Ga,
+						commonPort, commonIP);
+                
+                assertThat(browser.pageSource()).contains("deleteButton");
             }
 
         });

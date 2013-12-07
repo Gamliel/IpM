@@ -28,8 +28,13 @@ public class Application extends Controller {
     public static Result addServerDataForm() {
         return ok(addServerDataForm.render(""));
     }
+    
     public static Result showAllServerData(){
     	List<ServerData> allServerData = ServerData.find.all();
 		return ok(showAllServerData.render(allServerData));
+    }
+    
+    public static Result deleteServerData(){
+    	return ok();
     }
 }
