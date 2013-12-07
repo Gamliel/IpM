@@ -25,6 +25,45 @@ import play.test.TestBrowser;
 
 public class ApplicationTest {
 
+	private static void checkServerDataIsShown(TestBrowser browser,
+			String stage1, String yellowStar, String m37Ga,
+			String commonPort, String commonIP) {
+		browser.goTo("http://localhost:9000/showAllServerData");
+        
+        assertThat(browser.pageSource()).contains(stage1);
+        assertThat(browser.pageSource()).contains(yellowStar);
+        assertThat(browser.pageSource()).contains(m37Ga);
+        assertThat(browser.pageSource()).contains(commonPort);
+        assertThat(browser.pageSource()).contains(commonIP);
+	}
+
+	private static void addServerDataThroughTheForm(TestBrowser browser,
+			String stage1, String yellowStar, String m37Ga,
+			String commonPort, String commonIP) {
+		browser.goTo("http://localhost:9000/addServerDataForm");
+
+        WebElement conventionalName  = browser.getDriver().findElement(By.name("conventionalName"));
+        WebElement hostName  = browser.getDriver().findElement(By.name("hostName"));
+        WebElement domain  = browser.getDriver().findElement(By.name("domain"));
+        WebElement port  = browser.getDriver().findElement(By.name("port"));
+        WebElement ipAddress  = browser.getDriver().findElement(By.name("ipAddress"));
+        WebElement submitButton  = browser.getDriver().findElement(By.name("submitButton"));
+        
+        assertThat(conventionalName).isNotNull();
+        assertThat(hostName).isNotNull();
+        assertThat(domain).isNotNull();
+        assertThat(port).isNotNull();
+        assertThat(ipAddress).isNotNull();
+        assertThat(submitButton).isNotNull();
+        
+		conventionalName.sendKeys(stage1);
+		hostName.sendKeys(yellowStar);
+		domain.sendKeys(m37Ga);
+		port.sendKeys(commonPort);
+		ipAddress.sendKeys(commonIP);
+        submitButton.click();
+	}
+
 	@Test
 	public void callIndex() {
 		Result result = callAction(controllers.routes.ref.Application.index());
@@ -127,44 +166,6 @@ public class ApplicationTest {
 						commonPort, commonIP);
             }
 
-			private void checkServerDataIsShown(TestBrowser browser,
-					String stage1, String yellowStar, String m37Ga,
-					String commonPort, String commonIP) {
-				browser.goTo("http://localhost:9000/showAllServerData");
-                
-                assertThat(browser.pageSource()).contains(stage1);
-                assertThat(browser.pageSource()).contains(yellowStar);
-                assertThat(browser.pageSource()).contains(m37Ga);
-                assertThat(browser.pageSource()).contains(commonPort);
-                assertThat(browser.pageSource()).contains(commonIP);
-			}
-
-			private void addServerDataThroughTheForm(TestBrowser browser,
-					String stage1, String yellowStar, String m37Ga,
-					String commonPort, String commonIP) {
-				browser.goTo("http://localhost:9000/addServerDataForm");
-
-                WebElement conventionalName  = browser.getDriver().findElement(By.name("conventionalName"));
-                WebElement hostName  = browser.getDriver().findElement(By.name("hostName"));
-                WebElement domain  = browser.getDriver().findElement(By.name("domain"));
-                WebElement port  = browser.getDriver().findElement(By.name("port"));
-                WebElement ipAddress  = browser.getDriver().findElement(By.name("ipAddress"));
-                WebElement submitButton  = browser.getDriver().findElement(By.name("submitButton"));
-                
-                assertThat(conventionalName).isNotNull();
-                assertThat(hostName).isNotNull();
-                assertThat(domain).isNotNull();
-                assertThat(port).isNotNull();
-                assertThat(ipAddress).isNotNull();
-                assertThat(submitButton).isNotNull();
-                
-				conventionalName.sendKeys(stage1);
-				hostName.sendKeys(yellowStar);
-				domain.sendKeys(m37Ga);
-				port.sendKeys(commonPort);
-				ipAddress.sendKeys(commonIP);
-                submitButton.click();
-			}
         });
     }
 }
