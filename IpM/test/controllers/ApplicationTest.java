@@ -189,6 +189,8 @@ public class ApplicationTest {
 						commonPort, commonIP);
                 
                 assertThat(browser.pageSource()).contains("deleteButton");
+                WebElement deleteButton = browser.getDriver().findElement(By.name("deleteButton"));
+                assertThat(deleteButton).isNotNull();
             }
 
         });
