@@ -21,7 +21,7 @@ public class Application extends Controller {
         Form<ServerData> formData = form(ServerData.class).bindFromRequest();
         ServerData serverData = formData.get();
         serverData.save();
-        return redirect(routes.Application.addServerData());
+        return redirect(routes.Application.index());
     }
     
     public static Result showAllServerData(){

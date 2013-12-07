@@ -2,6 +2,6 @@
  
 <ul> 
 @allServerData.map { serverData =>
-  <li>@serverData.hostname.@serverData.domain:@serverData.port \<@serverData.ipAddress\></li>
+  <li>"@serverData.conventionalName" is @serverData.hostName.@serverData.domain:@serverData.port \<@serverData.ipAddress\></li>
 } 
 </ul>

@@ -1,4 +1,14 @@
 @(message: String)
 
 @main("Here the current server data") {
+
+    @helper.form(action = routes.Application.addServerData()) {
+    	<input name="conventionalName"/>
+        <input name="hostName"/>
+        <input name="domain"/>
+        <input name="port"/>
+        <input name="ipAddress"/>
+        <input type="submit"/>
+    }
+
 }

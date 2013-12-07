@@ -5,9 +5,10 @@
 
 create table server_data (
   id                        varchar(255) not null,
-  hostname                  varchar(255),
+  conventional_name         varchar(255),
+  host_name                 varchar(255),
   domain                    varchar(255),
-  port                      integer,
+  port                      integer not null,
   ip_address                varchar(255),
   constraint pk_server_data primary key (id))
 ;
