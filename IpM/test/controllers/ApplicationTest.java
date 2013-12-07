@@ -114,7 +114,35 @@ public class ApplicationTest {
     public void iCanAddServerDataThroughTheForm() {
         running(testServer(9000, fakeApplication(inMemoryDatabase())), HTMLUNIT, new Callback<TestBrowser>() {
             public void invoke(TestBrowser browser) {
-                browser.goTo("http://localhost:9000/addServerDataForm");
+            	String stage1 = "Stage 1";
+            	String yellowStar = "yellowStar";
+            	String m37Ga = "m37.ga";
+            	String commonPort = "12332";
+            	String commonIP = "23.43.23.11";
+
+            	addServerDataThroughTheForm(browser, stage1, yellowStar, m37Ga,
+						commonPort, commonIP);
+                
+                checkServerDataIsShown(browser, stage1, yellowStar, m37Ga,
+						commonPort, commonIP);
+            }
+
+			private void checkServerDataIsShown(TestBrowser browser,
+					String stage1, String yellowStar, String m37Ga,
+					String commonPort, String commonIP) {
+				browser.goTo("http://localhost:9000/showAllServerData");
+                
+                assertThat(browser.pageSource()).contains(stage1);
+                assertThat(browser.pageSource()).contains(yellowStar);
+                assertThat(browser.pageSource()).contains(m37Ga);
+                assertThat(browser.pageSource()).contains(commonPort);
+                assertThat(browser.pageSource()).contains(commonIP);
+			}
+
+			private void addServerDataThroughTheForm(TestBrowser browser,
+					String stage1, String yellowStar, String m37Ga,
+					String commonPort, String commonIP) {
+				browser.goTo("http://localhost:9000/addServerDataForm");
 
                 WebElement conventionalName  = browser.getDriver().findElement(By.name("conventionalName"));
                 WebElement hostName  = browser.getDriver().findElement(By.name("hostName"));
@@ -130,26 +158,13 @@ public class ApplicationTest {
                 assertThat(ipAddress).isNotNull();
                 assertThat(submitButton).isNotNull();
                 
-                String stage1 = "Stage 1";
-                String yellowStar = "yellowStar";
-                String m37Ga = "m37.ga";
-                String commonPort = "12332";
-                String commonIP = "23.43.23.11";
 				conventionalName.sendKeys(stage1);
 				hostName.sendKeys(yellowStar);
 				domain.sendKeys(m37Ga);
 				port.sendKeys(commonPort);
 				ipAddress.sendKeys(commonIP);
                 submitButton.click();
-                
-                browser.goTo("http://localhost:9000/showAllServerData");
-                
-                assertThat(browser.pageSource()).contains(stage1);
-                assertThat(browser.pageSource()).contains(yellowStar);
-                assertThat(browser.pageSource()).contains(m37Ga);
-                assertThat(browser.pageSource()).contains(commonPort);
-                assertThat(browser.pageSource()).contains(commonIP);
-            }
+			}
         });
     }
 }
