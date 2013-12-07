@@ -55,22 +55,25 @@ public class ApplicationTest {
 				assertThat(contentType(result)).isEqualTo("text/html");
 
 				assertThat(status(result)).isEqualTo(OK);
-				assertThat(contentAsString(result)).contains(conventionalName1);
-				assertThat(contentAsString(result)).contains(hostName1);
-				assertThat(contentAsString(result)).contains(domain);
-				assertThat(contentAsString(result)).contains(
-						String.valueOf(portNumber1));
-				assertThat(contentAsString(result)).contains(ipAddress1);
+				assertResultData(result, conventionalName1, hostName1, domain,
+						portNumber1, ipAddress1);
 
-				assertThat(contentAsString(result)).contains(conventionalName2);
-				assertThat(contentAsString(result)).contains(hostName2);
-				assertThat(contentAsString(result)).contains(domain);
-				assertThat(contentAsString(result)).contains(
-						String.valueOf(portNumber2));
-				assertThat(contentAsString(result)).contains(ipAddress2);
+				assertResultData(result, conventionalName2, hostName2, domain,
+						portNumber2, ipAddress2);
 
 				serverData1.delete();
 				serverData2.delete();
+			}
+
+			private void assertResultData(Result result,
+					String conventionalName, String hostName, String domain,
+					int portNumber, String ipAddress) {
+				assertThat(contentAsString(result)).contains(conventionalName);
+				assertThat(contentAsString(result)).contains(hostName);
+				assertThat(contentAsString(result)).contains(domain);
+				assertThat(contentAsString(result)).contains(
+						String.valueOf(portNumber));
+				assertThat(contentAsString(result)).contains(ipAddress);
 			}
 		});
 	}
