@@ -220,27 +220,5 @@ public class ApplicationTest {
                 assertThat(browser.pageSource()).doesNotContain(commonIP);
             }
         });
-    }
-    
-    @Test
-    public void iCanAddServerDataThroughYamlAndEbeanAndTheyGetSaved() {
-        running(testServer(9000, fakeApplication(inMemoryDatabase())), HTMLUNIT , new Callback<TestBrowser>() {
-            @SuppressWarnings("unchecked")
-			public void invoke(TestBrowser browser) throws JsonParseException, JsonMappingException, IOException {
-            	@SuppressWarnings("unchecked")
-				Map<String,List<ServerData>> all = (Map<String,List<ServerData>>)Yaml.load("initial-serverData.yml");
-
-            	List<ServerData> serversDataList = all.get("serversData");
-				Ebean.save(serversDataList);
-            
-				for (int i = 0; i < serversDataList.size(); i++){
-					ServerData curServerData = serversDataList.get(i);
-					JsonNode serverDataJson = toJson(curServerData);
-					HashMap<String, Object> serverDataJsonMap = new ObjectMapper().readValue(serverDataJson.traverse(), HashMap.class);
-					ServerData serverData = ServerData.find.where().allEq(serverDataJsonMap).findUnique();
-					assertThat(serverData).isNotNull();
-				}
-           }
-        });
-    }
+    }    
 }

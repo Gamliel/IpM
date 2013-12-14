@@ -1,10 +1,29 @@
 package models;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static play.libs.Json.toJson;
+import static play.test.Helpers.HTMLUNIT;
 import static play.test.Helpers.fakeApplication;
+import static play.test.Helpers.inMemoryDatabase;
 import static play.test.Helpers.running;
+import static play.test.Helpers.testServer;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
+
+import play.libs.Yaml;
+import play.libs.F.Callback;
+import play.test.TestBrowser;
+
+import com.avaje.ebean.Ebean;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ServerDataTest {
 	
@@ -43,5 +62,25 @@ public class ServerDataTest {
             }
         });
     }	
-	
+    @Test
+    public void iCanAddServerDataThroughYamlAndEbeanAndTheyGetSaved() {
+        running(testServer(9000, fakeApplication(inMemoryDatabase())), HTMLUNIT , new Callback<TestBrowser>() {
+            @SuppressWarnings("unchecked")
+			public void invoke(TestBrowser browser) throws JsonParseException, JsonMappingException, IOException {
+            	@SuppressWarnings("unchecked")
+				Map<String,List<ServerData>> all = (Map<String,List<ServerData>>)Yaml.load("initial-serverData.yml");
+
+            	List<ServerData> serversDataList = all.get("serversData");
+				Ebean.save(serversDataList);
+            
+				for (int i = 0; i < serversDataList.size(); i++){
+					ServerData curServerData = serversDataList.get(i);
+					JsonNode serverDataJson = toJson(curServerData);
+					HashMap<String, Object> serverDataJsonMap = new ObjectMapper().readValue(serverDataJson.traverse(), HashMap.class);
+					ServerData serverData = ServerData.find.where().allEq(serverDataJsonMap).findUnique();
+					assertThat(serverData).isNotNull();
+				}
+           }
+        });
+    }	
 }
