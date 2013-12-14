@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.constraints.AssertTrue;
+
 import org.junit.Test;
 
 import play.libs.Yaml;
@@ -77,6 +79,7 @@ public class ServerDataTest {
 					ServerData curServerData = serversDataList.get(i);
 					JsonNode serverDataJson = toJson(curServerData);
 					HashMap<String, Object> serverDataJsonMap = new ObjectMapper().readValue(serverDataJson.traverse(), HashMap.class);
+					assertThat(!serverDataJsonMap.isEmpty());
 					ServerData serverData = ServerData.find.where().allEq(serverDataJsonMap).findUnique();
 					assertThat(serverData).isNotNull();
 				}
