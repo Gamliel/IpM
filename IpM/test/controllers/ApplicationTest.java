@@ -13,7 +13,10 @@ import static play.test.Helpers.inMemoryDatabase;
 import static play.test.Helpers.running;
 import static play.test.Helpers.status;
 import static play.test.Helpers.testServer;
+import static play.libs.Json.toJson;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,11 +30,16 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import com.avaje.ebean.Ebean;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import play.libs.F.Callback;
 import play.libs.Yaml;
 import play.mvc.Result;
 import play.test.TestBrowser;
+import scala.util.parsing.json.JSON;
 
 public class ApplicationTest {
 
@@ -217,7 +225,8 @@ public class ApplicationTest {
     @Test
     public void iCanAddServerDataThroughYamlAndEbeanAndTheyGetSaved() {
         running(testServer(9000, fakeApplication(inMemoryDatabase())), HTMLUNIT , new Callback<TestBrowser>() {
-            public void invoke(TestBrowser browser) {
+            @SuppressWarnings("unchecked")
+			public void invoke(TestBrowser browser) throws JsonParseException, JsonMappingException, IOException {
             	@SuppressWarnings("unchecked")
 				Map<String,List<ServerData>> all = (Map<String,List<ServerData>>)Yaml.load("initial-serverData.yml");
 
@@ -225,7 +234,10 @@ public class ApplicationTest {
 				Ebean.save(serversDataList);
             
 				for (int i = 0; i < serversDataList.size(); i++){
-					ServerData serverData = ServerData.find.where().eq("conventionalName", serversDataList.get(i).conventionalName).findUnique();
+					ServerData curServerData = serversDataList.get(i);
+					JsonNode serverDataJson = toJson(curServerData);
+					HashMap<String, Object> serverDataJsonMap = new ObjectMapper().readValue(serverDataJson.traverse(), HashMap.class);
+					ServerData serverData = ServerData.find.where().allEq(serverDataJsonMap).findUnique();
 					assertThat(serverData).isNotNull();
 				}
            }
