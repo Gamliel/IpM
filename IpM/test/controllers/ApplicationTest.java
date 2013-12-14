@@ -14,6 +14,9 @@ import static play.test.Helpers.running;
 import static play.test.Helpers.status;
 import static play.test.Helpers.testServer;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.swing.text.html.HTML;
 
 import models.ServerData;
@@ -23,7 +26,10 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import com.avaje.ebean.Ebean;
+
 import play.libs.F.Callback;
+import play.libs.Yaml;
 import play.mvc.Result;
 import play.test.TestBrowser;
 
@@ -180,16 +186,16 @@ public class ApplicationTest {
     public void iCanAddServerDataThroughTheFormAndDeleteIt() {
         running(testServer(9000, fakeApplication(inMemoryDatabase())), HTMLUNIT , new Callback<TestBrowser>() {
             public void invoke(TestBrowser browser) {
-            	String stage1 = "UAT 1";
-            	String yellowStar = "brightStar";
-            	String m37Ga = "milkyway.ga";
+            	String uat1 = "UAT 1";
+            	String brightStar = "brightStar";
+            	String milkywayGa = "milkyway.ga";
             	String commonPort = "12332";
             	String commonIP = "23.45.23.11";
 
-            	addServerDataThroughTheForm(browser, stage1, yellowStar, m37Ga,
+            	addServerDataThroughTheForm(browser, uat1, brightStar, milkywayGa,
 						commonPort, commonIP);
                 
-                checkServerDataIsShown(browser, stage1, yellowStar, m37Ga,
+                checkServerDataIsShown(browser, uat1, brightStar, milkywayGa,
 						commonPort, commonIP);
                 
                 assertThat(browser.pageSource()).contains("deleteButton");
@@ -199,12 +205,30 @@ public class ApplicationTest {
                 
                 assertThat(browser.getDriver().getCurrentUrl()).contains("showAllServerData");
                 
-                assertThat(browser.pageSource()).doesNotContain(stage1);
-                assertThat(browser.pageSource()).doesNotContain(yellowStar);
-                assertThat(browser.pageSource()).doesNotContain(m37Ga);
+                assertThat(browser.pageSource()).doesNotContain(uat1);
+                assertThat(browser.pageSource()).doesNotContain(brightStar);
+                assertThat(browser.pageSource()).doesNotContain(milkywayGa);
                 assertThat(browser.pageSource()).doesNotContain(commonPort);
                 assertThat(browser.pageSource()).doesNotContain(commonIP);
             }
+        });
+    }
+    
+    @Test
+    public void iCanAddServerDataThroughYamlAndEbeanAndTheyGetSaved() {
+        running(testServer(9000, fakeApplication(inMemoryDatabase())), HTMLUNIT , new Callback<TestBrowser>() {
+            public void invoke(TestBrowser browser) {
+            	@SuppressWarnings("unchecked")
+				Map<String,List<ServerData>> all = (Map<String,List<ServerData>>)Yaml.load("initial-serverData.yml");
+
+            	List<ServerData> serversDataList = all.get("serversData");
+				Ebean.save(serversDataList);
+            
+				for (int i = 0; i < serversDataList.size(); i++){
+					ServerData serverData = ServerData.find.where().eq("conventionalName", serversDataList.get(i).conventionalName).findUnique();
+					assertThat(serverData).isNotNull();
+				}
+           }
         });
     }
 }

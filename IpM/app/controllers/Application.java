@@ -39,4 +39,6 @@ public class Application extends Controller {
     	serverData.delete();    	
     	return redirect(routes.Application.showAllServerData());
     }
+    
+    
 }
