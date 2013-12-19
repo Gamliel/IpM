@@ -247,5 +247,26 @@ public class ApplicationTest {
            }
         });
     }	
-    
+
+    @Test
+    public void iCanAddServerDataThroughYamlAndWhenIRetrieveAllDataTheyHaveTheSameSize() {
+        running(testServer(9000, fakeApplication(inMemoryDatabase())), HTMLUNIT , new Callback<TestBrowser>() {
+            @SuppressWarnings("unchecked")
+			public void invoke(TestBrowser browser) throws JsonParseException, JsonMappingException, IOException {
+            	Map<String,List<ServerData>> all = (Map<String,List<ServerData>>)Yaml.load("initial-serverData.yml");
+
+            	List<ServerData> serversDataList = all.get("serversData");
+				Ebean.save(serversDataList);
+				
+				Result result = callAction(controllers.routes.ref.Application.searchServerData(null));
+				assertThat(status(result)).isEqualTo(OK);
+				assertThat(contentType(result)).isEqualTo("application/json");
+				String resultContent = StringEscapeUtils.unescapeJava(contentAsString(result));
+				JsonNode retrievedJsonArray = parse(resultContent);
+				assertThat(retrievedJsonArray.isArray()).isTrue();
+				assertThat(retrievedJsonArray.size()).isEqualTo(serversDataList.size());
+           }
+        });
+    }	
+
 }
