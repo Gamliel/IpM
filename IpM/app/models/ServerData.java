@@ -2,8 +2,6 @@ package models;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.UniqueConstraint;
-import javax.validation.Constraint;
 import javax.validation.constraints.NotNull;
 
 import play.data.validation.Constraints.Max;

@@ -3,15 +3,15 @@
 serversData:
 
   - !!models.ServerData
-    id: UAT 1
-    conventionalName: brightStar
-    hostName: milkyway.ga
+    conventionalName: UAT 1 
+    domain: milkyway.ga
+    hostName: brightStar
     port: 12332
     ipAddress: 23.45.23.11
     
   - !!models.ServerData
-    id: Stage 2
-    conventionalName: yellowStar
-    hostName: m31.ga
+    conventionalName: Stage 2 
+    domain: m31.ga
+    hostName: yellowStar
     port: 12332
     ipAddress: 23.45.13.11

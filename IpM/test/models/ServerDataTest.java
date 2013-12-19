@@ -13,12 +13,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.validation.constraints.AssertTrue;
-
 import org.junit.Test;
 
-import play.libs.Yaml;
 import play.libs.F.Callback;
+import play.libs.Yaml;
 import play.test.TestBrowser;
 
 import com.avaje.ebean.Ebean;
@@ -69,12 +67,11 @@ public class ServerDataTest {
         running(testServer(9000, fakeApplication(inMemoryDatabase())), HTMLUNIT , new Callback<TestBrowser>() {
             @SuppressWarnings("unchecked")
 			public void invoke(TestBrowser browser) throws JsonParseException, JsonMappingException, IOException {
-            	@SuppressWarnings("unchecked")
 				Map<String,List<ServerData>> all = (Map<String,List<ServerData>>)Yaml.load("initial-serverData.yml");
 
             	List<ServerData> serversDataList = all.get("serversData");
 				Ebean.save(serversDataList);
-            
+				
 				for (int i = 0; i < serversDataList.size(); i++){
 					ServerData curServerData = serversDataList.get(i);
 					JsonNode serverDataJson = toJson(curServerData);
@@ -82,6 +79,7 @@ public class ServerDataTest {
 					assertThat(!serverDataJsonMap.isEmpty());
 					ServerData serverData = ServerData.find.where().allEq(serverDataJsonMap).findUnique();
 					assertThat(serverData).isNotNull();
+					assertThat(serverData.id.equals(curServerData.id)).isTrue();
 				}
            }
         });

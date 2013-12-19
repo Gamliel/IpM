@@ -1,6 +1,7 @@
 package controllers;
 
 import static play.data.Form.form;
+import static play.libs.Json.toJson;
 
 import java.util.List;
 
@@ -8,9 +9,10 @@ import models.ServerData;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import views.html.addServerDataForm;
 import views.html.index;
 import views.html.showAllServerData;
-import views.html.addServerDataForm;
+
 
 public class Application extends Controller {
 
@@ -40,5 +42,12 @@ public class Application extends Controller {
     	return redirect(routes.Application.showAllServerData());
     }
     
+    public static Result searchServerData(String conventionalName){
+    	ServerData serverData= ServerData.find.where().eq("conventionalName", conventionalName).findUnique();
+    	if (serverData == null) {
+    		return ok(toJson(""));
+    	}
+    	return ok(toJson(serverData));
+    }
     
 }

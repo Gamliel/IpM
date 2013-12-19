@@ -6,9 +6,10 @@
 GET     /                           	controllers.Application.index()
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               	controllers.Assets.at(path="/public", file)
+GET     /assets/*file               		controllers.Assets.at(path="/public", file)
 
-GET     /addServerDataForm				controllers.Application.addServerDataForm()  
-POST    /addServerData                 	controllers.Application.addServerData()
-GET     /showAllServerData				controllers.Application.showAllServerData()
-POST    /deleteServerData/:id			controllers.Application.deleteServerData(id:String)
+GET     /addServerDataForm					controllers.Application.addServerDataForm()  
+POST    /addServerData                 		controllers.Application.addServerData()
+GET     /showAllServerData					controllers.Application.showAllServerData()
+POST    /deleteServerData/:id				controllers.Application.deleteServerData(id:String)
+GET     /searchServerData/:conventionalName	controllers.Application.searchServerData(conventionalName:String)

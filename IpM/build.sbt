@@ -8,3 +8,5 @@ libraryDependencies ++= Seq(
   cache)     
 
 play.Project.playJavaSettings
+
+ebeanEnabled := true

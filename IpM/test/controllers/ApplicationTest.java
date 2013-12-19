@@ -1,9 +1,9 @@
 package controllers;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static play.libs.Json.toJson;
 import static play.mvc.Http.Status.OK;
 import static play.test.Helpers.HTMLUNIT;
-import static play.test.Helpers.FIREFOX;
 import static play.test.Helpers.callAction;
 import static play.test.Helpers.charset;
 import static play.test.Helpers.contentAsString;
@@ -13,33 +13,30 @@ import static play.test.Helpers.inMemoryDatabase;
 import static play.test.Helpers.running;
 import static play.test.Helpers.status;
 import static play.test.Helpers.testServer;
-import static play.libs.Json.toJson;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.swing.text.html.HTML;
 
 import models.ServerData;
 import models.ServerDataTest;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+
+import play.Logger;
+import play.libs.F.Callback;
+import play.libs.Json;
+import play.libs.Yaml;
+import play.mvc.Result;
+import play.test.TestBrowser;
 
 import com.avaje.ebean.Ebean;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import play.libs.F.Callback;
-import play.libs.Yaml;
-import play.mvc.Result;
-import play.test.TestBrowser;
-import scala.util.parsing.json.JSON;
 
 public class ApplicationTest {
 
@@ -220,5 +217,29 @@ public class ApplicationTest {
                 assertThat(browser.pageSource()).doesNotContain(commonIP);
             }
         });
-    }    
+    }
+    
+    @Test
+    public void iCanAddServerDataThroughYamlAndRetrieveTheJsonValue() {
+        running(testServer(9000, fakeApplication(inMemoryDatabase())), HTMLUNIT , new Callback<TestBrowser>() {
+            @SuppressWarnings("unchecked")
+			public void invoke(TestBrowser browser) throws JsonParseException, JsonMappingException, IOException {
+            	Map<String,List<ServerData>> all = (Map<String,List<ServerData>>)Yaml.load("initial-serverData.yml");
+
+            	List<ServerData> serversDataList = all.get("serversData");
+				Ebean.save(serversDataList);
+				
+				for (int i = 0; i < serversDataList.size(); i++){
+					ServerData curServerData = serversDataList.get(i);
+					JsonNode serverDataJson = toJson(curServerData);
+					Result result = callAction(controllers.routes.ref.Application.searchServerData(curServerData.conventionalName.toString()));
+					assertThat(status(result)).isEqualTo(OK);
+					assertThat(contentType(result)).isEqualTo("application/json");
+					JsonNode retrievedNode = toJson(contentAsString(result));
+					assertThat(("\"" + StringEscapeUtils.escapeJava(Json.stringify(serverDataJson)) + "\"").equals(Json.stringify(retrievedNode))).isTrue();
+				}
+           }
+        });
+    }	
+    
 }
