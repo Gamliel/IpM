@@ -57,4 +57,11 @@ public class Application extends Controller {
     	return ok(toJson(serverData));
     }
     
+    public static Result searchAllServerData(){
+    	List<ServerData> serverData= ServerData.find.all();
+    	if (serverData == null) {
+    		return ok(toJson(""));
+    	}
+    	return ok(toJson(serverData));
+    }
 }

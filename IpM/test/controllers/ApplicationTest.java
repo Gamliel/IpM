@@ -249,7 +249,7 @@ public class ApplicationTest {
     }	
 
     @Test
-    public void iCanAddServerDataThroughYamlAndWhenIRetrieveAllDataTheyHaveTheSameSize() {
+    public void iCanAddServerDataThroughYamlAndWhenIRetrieveAllServerDataTheyHaveTheSameSize() {
         running(testServer(9000, fakeApplication(inMemoryDatabase())), HTMLUNIT , new Callback<TestBrowser>() {
             @SuppressWarnings("unchecked")
 			public void invoke(TestBrowser browser) throws JsonParseException, JsonMappingException, IOException {
@@ -258,7 +258,7 @@ public class ApplicationTest {
             	List<ServerData> serversDataList = all.get("serversData");
 				Ebean.save(serversDataList);
 				
-				Result result = callAction(controllers.routes.ref.Application.searchServerData(null));
+				Result result = callAction(controllers.routes.ref.Application.searchAllServerData());
 				assertThat(status(result)).isEqualTo(OK);
 				assertThat(contentType(result)).isEqualTo("application/json");
 				String resultContent = StringEscapeUtils.unescapeJava(contentAsString(result));
