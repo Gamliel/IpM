@@ -2,6 +2,7 @@ package controllers;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static play.libs.Json.toJson;
+import static play.libs.Json.parse;
 import static play.mvc.Http.Status.OK;
 import static play.test.Helpers.HTMLUNIT;
 import static play.test.Helpers.callAction;
@@ -22,6 +23,7 @@ import models.ServerData;
 import models.ServerDataTest;
 
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.json.JSONArray;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -37,6 +39,7 @@ import com.avaje.ebean.Ebean;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.JsonSerializer;
 
 public class ApplicationTest {
 
@@ -235,8 +238,11 @@ public class ApplicationTest {
 					Result result = callAction(controllers.routes.ref.Application.searchServerData(curServerData.conventionalName.toString()));
 					assertThat(status(result)).isEqualTo(OK);
 					assertThat(contentType(result)).isEqualTo("application/json");
-					JsonNode retrievedNode = toJson(contentAsString(result));
-					assertThat(("\"" + StringEscapeUtils.escapeJava(Json.stringify(serverDataJson)) + "\"").equals(Json.stringify(retrievedNode))).isTrue();
+					String resultContent = StringEscapeUtils.unescapeJava(contentAsString(result));
+					JsonNode retrievedJsonArray = parse(resultContent);
+					assertThat(retrievedJsonArray.isArray()).isTrue();
+					JsonNode retrievedNode = retrievedJsonArray.get(0);
+					assertThat((serverDataJson).equals(retrievedNode)).isTrue();
 				}
            }
         });

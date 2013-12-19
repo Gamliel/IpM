@@ -15,6 +15,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import play.Logger;
 import play.libs.F.Callback;
 import play.libs.Yaml;
 import play.test.TestBrowser;

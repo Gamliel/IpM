@@ -3,6 +3,7 @@ package controllers;
 import static play.data.Form.form;
 import static play.libs.Json.toJson;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import models.ServerData;
@@ -43,7 +44,13 @@ public class Application extends Controller {
     }
     
     public static Result searchServerData(String conventionalName){
-    	ServerData serverData= ServerData.find.where().eq("conventionalName", conventionalName).findUnique();
+    	List<ServerData> serverData= null;
+    	if (conventionalName != null){
+    		serverData = new ArrayList<ServerData>();
+    		serverData.add(ServerData.find.where().eq("conventionalName", conventionalName).findUnique());
+    	} else {
+    		serverData = ServerData.find.all();
+    	}
     	if (serverData == null) {
     		return ok(toJson(""));
     	}
