@@ -1,8 +1,8 @@
 package controllers;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static play.libs.Json.toJson;
 import static play.libs.Json.parse;
+import static play.libs.Json.toJson;
 import static play.mvc.Http.Status.OK;
 import static play.test.Helpers.HTMLUNIT;
 import static play.test.Helpers.callAction;
@@ -23,14 +23,11 @@ import models.ServerData;
 import models.ServerDataTest;
 
 import org.apache.commons.lang3.StringEscapeUtils;
-import org.json.JSONArray;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import play.Logger;
 import play.libs.F.Callback;
-import play.libs.Json;
 import play.libs.Yaml;
 import play.mvc.Result;
 import play.test.TestBrowser;
@@ -39,7 +36,6 @@ import com.avaje.ebean.Ebean;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.JsonSerializer;
 
 public class ApplicationTest {
 

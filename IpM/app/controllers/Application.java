@@ -7,11 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import models.ServerData;
+import play.api.Routes;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.addServerDataForm;
 import views.html.index;
+import views.html.queryServerData;
 import views.html.showAllServerData;
 
 
@@ -63,5 +65,9 @@ public class Application extends Controller {
     		return ok(toJson(""));
     	}
     	return ok(toJson(serverData));
+    }
+    
+    public static Result queryAllServerData(){
+    	return ok(queryServerData.render(""));
     }
 }
