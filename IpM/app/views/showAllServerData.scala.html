@@ -20,18 +20,31 @@
         	  });
     	  });
     	});
-    $( "#tags" ).autocomplete({
+    $( "#cName" ).autocomplete({
       source: availableTags
-    });
+      });
   });
+
+
+  function runScript(e) {
+	    if (e.keyCode == 13) {
+		  	alert($( "#cName" ).val());
+	    	//var table = document.getElementById("IpMTable");
+	    	//var row = table.insertRow($( "#cName" ).value);
+	    	//return false;
+	    }
+	}  
   </script>
 </head>
 <body>
  
 <div class="ui-widget">
-  <label for="tags">Conventional Name:</label>
-  <input id="tags">
+  <label for="cName">Conventional Name:</label>
+  <input id="cName" onkeypress="return runScript(event)"/>
 </div>
+
+<table id="IpMTable">
+</table>
 
 <ul> 
 @allServerData.map { serverData =>
