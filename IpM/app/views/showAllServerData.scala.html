@@ -2,97 +2,22 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>jQuery UI Autocomplete - Default functionality</title>
-  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
-  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-  <!--  >link rel="stylesheet" href="/resources/demos/style.css"-->
-  <script>
-  $(function() {
-    var availableTags = [];
-    $.getJSON( "/searchAllServerData", function( data ) {
-    	  $.each( data, function( key, val ) {
-        	  $.each( val, function( inner_key, inner_val ) {
-            	  if(inner_key == "conventionalName") {
-        	    	availableTags.push( inner_val );
-            	  }
-        	  });
-    	  });
-    	});
-    $( "#cName" ).autocomplete({
-      source: availableTags
-      });
-  });
-
-
-  function addRow(tableID, textRow, serverData) {
-	  // Get a reference to the table
-	  var table = document.getElementById(tableID);
-
-	  var tableRef = table.getElementsByTagName("tbody")[0];
-	  // Insert a row in the table at row index 0
-	  var newRow   = tableRef.insertRow(0);
-
-	  // Insert a cell in the row at index 0
-	  var newCell  = newRow.insertCell(0);
-
-
-	  var element1 = document.createElement("span");
-      element1.Id="serverData_" + serverData['Id'];
-      element1.textContent = serverData['hostName'] + '@@' + 
-      	serverData['domain'] + ':' + serverData['port'] + 
-      	' <' + serverData['ipAddress'] + '>';
-	  newCell.appendChild(element1);
-	}
-
-  function emptyTable(tableID){
-  	var table = document.getElementById(tableID);
-  	var tableElements = table.getElementsByTagName("tbody");
-  	var new_tbody = document.createElement('tbody');
-  	if (tableElements.length != 0) {
-  		var old_tbody = tableElements[0];
-  		table.replaceChild(new_tbody, old_tbody)
-  	} else {
-		table.appendChild(new_tbody);
-  	}  	
-  }
-  
-  function runScript(e) {
-	    if (e.keyCode == 13) {
-	    	emptyTable("IpMTable");
-	    	if ($( "#cName" ).val() != undefined){
-	    	    $.getJSON( "/searchServerData/"+ $( "#cName" ).val(), function( data ) {
-	    	    	  $.each( data, function( key, val ) {
-		    	    	  	alert($( "#cName" ).val());
-	    		    		addRow("IpMTable", $( "#cName" ).val(), val);
-	    	    	  });
-	    	    	});
-	    	}
-	    	return false;
-	    }
-	}
-  </script>
+  <title>show all Server Data</title>
 </head>
 <body>
  
-<div class="ui-widget">
-  <label for="cName">Conventional Name:</label>
-  <input id="cName" onkeypress="return runScript(event)"/>
-</div>
-
+ 
 <table id="IpMTable">
+@allServerData.map { serverData =>
+  <tr><td>"@serverData.conventionalName" is "@serverData.hostName.@serverData.domain:@serverData.port" <@serverData.ipAddress></td> 
+  <td>@helper.form(action = routes.Application.deleteServerData(serverData.id)) {
+        <input name="deleteButton" type="submit" value="Delete"/>
+    }
+    </td> 
+  </tr>
+} 
 </table>
 
-<ul> 
-@allServerData.map { serverData =>
-  <li>"@serverData.conventionalName" is "@serverData.hostName.@serverData.domain:@serverData.port" <@serverData.ipAddress> 
-  @helper.form(action = routes.Application.deleteServerData(serverData.id)) {
-        <input name="deleteButton" type="submit" value="Delete"/>
-    }  
-  </li>
-} 
-</ul> 
 
 </body>
 </html>

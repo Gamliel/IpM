@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>jQuery UI Autocomplete - Default functionality</title>
+  <title>Query Server Data</title>
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
   <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
   <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
@@ -64,7 +64,6 @@
 	    	if ($( "#cName" ).val() != undefined){
 	    	    $.getJSON( "/searchServerData/"+ $( "#cName" ).val(), function( data ) {
 	    	    	  $.each( data, function( key, val ) {
-		    	    	  	alert($( "#cName" ).val());
 	    		    		addRow("IpMTable", $( "#cName" ).val(), val);
 	    	    	  });
 	    	    	});
