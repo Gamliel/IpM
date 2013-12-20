@@ -2,11 +2,16 @@
 @(param: Any)
 
     @helper.form(action = routes.Application.addServerData()) {
-    	<input name="conventionalName"/>
-        <input name="hostName"/>
-        <input name="domain"/>
-        <input name="port"/>
-        <input name="ipAddress"/>
+    	<label for= "conventionalName">Conventional Name</label>
+    	<input name="conventionalName" id="conventionalName"/>
+    	<label for= "hostName">Host Name</label>
+        <input name="hostName" id="hostName"/>
+    	<label for= "domain">Domain</label>
+        <input name="domain" id="domain"/>
+    	<label for= "port">Port</label>
+        <input name="port" id="port"/>
+    	<label for= "ipAddress">IP Address</label>
+        <input name="ipAddress" id="ipAddress"/>
         <input name="submitButton" type="submit"/>
     }    
  
