@@ -12,7 +12,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.addServerDataForm;
 import views.html.index;
-import views.html.queryServerData;
+import views.html.queryAllServerData;
 import views.html.showAllServerData;
 
 
@@ -67,6 +67,6 @@ public class Application extends Controller {
     }
     
     public static Result queryAllServerData(){
-    	return ok(queryServerData.render(""));
+    	return ok(queryAllServerData.render(""));
     }
 }
