@@ -280,7 +280,12 @@ public class ApplicationTest {
 				WebDriver webDriver = browser.getDriver();
 				WebElement querybox = webDriver.findElement(By.id("cName"));
 				assertThat(querybox).isNotNull();
-           }
+				
+				querybox.sendKeys("S");
+				WebElement stageElementInMenu = webDriver.findElement(By.className("ui-corner-all"));
+				assertThat(stageElementInMenu).isNotNull();
+				assertThat(stageElementInMenu.getText()).isEqualTo("Stage 2");
+			}
         });
     }
 }
