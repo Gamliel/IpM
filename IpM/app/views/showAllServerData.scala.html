@@ -2,15 +2,42 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <title>show all Server Data</title>
+  <meta charset="utf-8">
+  <title>Show All Server Data</title>
+  <link rel="stylesheet" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
+  <link rel="stylesheet" href="@routes.Assets.at("stylesheets/bootstrap-theme.min.css")">
+  <link rel="stylesheet" href="@routes.Assets.at("stylesheets/bootstrap-theme.min.css")">
+  <link rel="stylesheet" href="@routes.Assets.at("stylesheets/IpM.css")">
+  <script src="@routes.Assets.at("javascripts/jquery-2.0.3.min.js")"></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  <script src="@routes.Assets.at("javascripts/bootstrap.min.js")"></script>
 </head>
 <body>
-<a href="/">Home</a>
- 
- 
-<table id="IpMTable">
+ <div class="navbar-wrapper">
+   <div class="container">
+     <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+       <div class="container">
+         <div class="navbar-header">
+           <a class="navbar-brand">IpM</a>
+         </div>
+         <div class="navbar-collapse collapse">
+           <ul class="nav navbar-nav">
+             <li class="active"><a href="/">Home</a></li>
+           </ul>
+         </div>
+       </div>
+     </div>
+   </div>
+   </div>
+	<form>
+	   <div class="jumbotron">
+		  <h1 for="cName"><center>Server Data</center></h1>
+	   </div>
+	</form>
+	<div class>
+<table id="IpMTable" class="table table-striped">
 @allServerData.map { serverData =>
-  <tr><td>"@serverData.conventionalName" is "@serverData.hostName.@serverData.domain:@serverData.port" <@serverData.ipAddress></td> 
+  <tr><td> <span class="table-cell">"@serverData.conventionalName" is "@serverData.hostName.@serverData.domain:@serverData.port" <@serverData.ipAddress></span></td> 
   <td>@helper.form(action = routes.Application.deleteServerData(serverData.id)) {
         <input name="deleteButton" type="submit" value="Delete"/>
     }
@@ -18,6 +45,5 @@
   </tr>
 } 
 </table>
-
 </body>
 </html>
