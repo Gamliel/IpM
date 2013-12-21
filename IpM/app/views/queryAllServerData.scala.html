@@ -20,7 +20,9 @@
 					$.each(data, function(key, val) {
 						$.each(val, function(inner_key, inner_val) {
 							if (inner_key == "conventionalName") {
-								availableTags.push(inner_val);
+								if (availableTags.indexOf(inner_val) == -1){
+									availableTags.push(inner_val);
+								}
 							}
 						});
 					});
