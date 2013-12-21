@@ -1,7 +1,41 @@
 @(message: String)
 
-@main("Here the current server data") {
-<a href="/addServerDataForm">Add ServerData</a>
-<a href="/queryAllServerData">Search ServerData</a>
-<a href="/showAllServerData">Show all ServerData</a>
-}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Query Server Data</title>
+  <link rel="stylesheet" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
+  <link rel="stylesheet" href="@routes.Assets.at("stylesheets/bootstrap-theme.min.css")">
+  <link rel="stylesheet" href="@routes.Assets.at("stylesheets/bootstrap-theme.min.css")">
+  <link rel="stylesheet" href="@routes.Assets.at("stylesheets/IpM.css")">
+  <script src="@routes.Assets.at("javascripts/jquery-2.0.3.min.js")"></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  <script src="@routes.Assets.at("javascripts/bootstrap.min.js")"></script>
+</head>
+<body>
+ <div class="navbar-wrapper">
+   <div class="container">
+     <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+       <div class="container">
+         <div class="navbar-header">
+           <a class="navbar-brand">IpM</a>
+         </div>
+         <div class="navbar-collapse collapse">
+           <ul class="nav navbar-nav">
+             <li class="active"><a href="/addServerDataForm">Add ServerData</a></li>
+             <li class="active"><a href="/queryAllServerData">Search ServerData</a></li>
+             <li class="active"><a href="/showAllServerData">Show all ServerData</a></li>
+           </ul>
+         </div>
+       </div>
+     </div>
+   </div>
+   </div>
+	<form>
+	   <div class="jumbotron">
+		  <h1 for="cName"><center>Welcome to IpAddress Manager</center></h1>
+	   </div>
+	</form>
+	<div class>
+</html>
