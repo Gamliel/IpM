@@ -1,5 +1,6 @@
 @* addServerData Template File *@
 @(param: Any)
+<a href="/">Home</a>
 
     @helper.form(action = routes.Application.addServerData()) {
     	<label for= "conventionalName">Conventional Name</label>
@@ -13,5 +14,6 @@
     	<label for= "ipAddress">IP Address</label>
         <input name="ipAddress" id="ipAddress"/>
         <input name="submitButton" type="submit"/>
-    }    
+    }
+    
  
