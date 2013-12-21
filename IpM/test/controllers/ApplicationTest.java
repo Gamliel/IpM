@@ -87,7 +87,7 @@ public class ApplicationTest {
 		assertThat(contentType(result)).isEqualTo("text/html");
 		assertThat(charset(result)).isEqualTo("utf-8");
 		assertThat(contentAsString(result).contains(
-				"<title>Here the current server data</title>"));
+				"<title>IpAddress  Manager</title>"));
 	}
 
 	@Test

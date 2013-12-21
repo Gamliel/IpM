@@ -17,7 +17,7 @@ public class IntegrationTest {
         running(testServer(9000, fakeApplication(inMemoryDatabase())), HTMLUNIT, new Callback<TestBrowser>() {
             public void invoke(TestBrowser browser) {
                 browser.goTo("http://localhost:9000");
-                assertThat(browser.pageSource()).contains("Here the current server data");
+                assertThat(browser.pageSource()).contains("Welcome to IpAddress Manager");
             }
         });
     }
