@@ -34,6 +34,7 @@
 
 				var element1 = document.createElement("span");
 				element1.id = "serverData_" + serverData['id'];
+				element1.className = "table-cell"; 
 				element1.textContent = serverData['hostName'] + '@@'
 						+ serverData['domain'] + ':' + serverData['port']
 						+ ' <' + serverData['ipAddress'] + '>';
