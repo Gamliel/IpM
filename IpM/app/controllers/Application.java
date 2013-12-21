@@ -48,7 +48,7 @@ public class Application extends Controller {
     	List<ServerData> serverData= null;
     	if (conventionalName != null){
     		serverData = new ArrayList<ServerData>();
-    		serverData.add(ServerData.find.where().eq("conventionalName", conventionalName).findUnique());
+    		serverData.addAll(ServerData.find.where().eq("conventionalName", conventionalName).findList());
     	} else {
     		serverData = ServerData.find.all();
     	}
