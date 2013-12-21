@@ -12,6 +12,8 @@
   <script src="@routes.Assets.at("javascripts/bootstrap.min.js")"></script>
   <script src="@routes.Assets.at("javascripts/typeahead.min.js")"></script>
   <script>
+  
+		
 			$(function() {
 				var availableTags = [];
 				$.getJSON("/searchAllServerData", function(data) {
@@ -22,17 +24,15 @@
 							}
 						});
 					});
-				});
-				$("#cName").autocomplete({
-					source : availableTags
+					$('#cName').typeahead({                                
+						  name: 'Type a Name',                                                          
+						  local: availableTags,                                         
+						  limit: 10                                                                   
+						});				
 				});
 
-//				$('#cName').typeahead({                                
-//					  name: 'Type a Name',                                                          
-//					  prefetch: availableTags,                                         
-//					  limit: 10                                                                   
-//					});				
 			});
+
 
 			function addRow(tableID, textRow, serverData) {
 				// Get a reference to the table
@@ -102,7 +102,7 @@
 	<form>
 	   <div class="jumbotron">
 		  <h1 for="cName"><center>Conventional Name</center></h1>
-		  <p><center><input id="cName" onkeypress="return fillTable(event)"/></center></p>
+		  <p><center><input id="cName" class="typeahead" onkeypress="return fillTable(event)"/></center></p>
 	   </div>
 	</form>
 <table id="IpMTable">
