@@ -37,9 +37,8 @@
 	  // Insert a cell in the row at index 0
 	  var newCell  = newRow.insertCell(0);
 
-
 	  var element1 = document.createElement("span");
-      element1.Id="serverData_" + serverData['Id'];
+      element1.id="serverData_" + serverData['id'];
       element1.textContent = serverData['hostName'] + '@@' + 
       	serverData['domain'] + ':' + serverData['port'] + 
       	' <' + serverData['ipAddress'] + '>';
@@ -74,11 +73,13 @@
   </script>
 </head>
 <body>
- 
+
+<form>
 <div class="ui-widget">
   <label for="cName">Conventional Name:</label>
   <input id="cName" onkeypress="return runScript(event)"/>
 </div>
+</form>
 
 <table id="IpMTable">
 </table>

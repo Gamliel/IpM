@@ -25,7 +25,6 @@ import models.ServerDataTest;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import play.libs.F.Callback;
@@ -39,6 +38,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 
 public class ApplicationTest {
+
+	private static final int DEFAULT_TIMEOUT = 10;
 
 	private static void checkServerDataIsShown(TestBrowser browser,
 			String stage1, String yellowStar, String m37Ga,
@@ -264,28 +265,6 @@ public class ApplicationTest {
 				assertThat(retrievedJsonArray.size()).isEqualTo(serversDataList.size());
            }
         });
-    }
+    }    
     
-    @Test
-    public void iCanAddServerDataThroughYamlAndSearchThem() {
-        running(testServer(9000, fakeApplication(inMemoryDatabase())), HTMLUNIT , new Callback<TestBrowser>() {
-            @SuppressWarnings("unchecked")
-			public void invoke(TestBrowser browser) throws JsonParseException, JsonMappingException, IOException {
-            	Map<String,List<ServerData>> all = (Map<String,List<ServerData>>)Yaml.load("initial-serverData.yml");
-
-            	List<ServerData> serversDataList = all.get("serversData");
-				Ebean.save(serversDataList);
-				browser.goTo("http://localhost:9000/queryAllServerData");
-				
-				WebDriver webDriver = browser.getDriver();
-				WebElement querybox = webDriver.findElement(By.id("cName"));
-				assertThat(querybox).isNotNull();
-				
-				querybox.sendKeys("S");
-				WebElement stageElementInMenu = webDriver.findElement(By.className("ui-corner-all"));
-				assertThat(stageElementInMenu).isNotNull();
-				assertThat(stageElementInMenu.getText()).isEqualTo("Stage 2");
-			}
-        });
-    }
 }
