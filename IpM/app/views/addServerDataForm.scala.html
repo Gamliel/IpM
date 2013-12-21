@@ -1,19 +1,92 @@
 @* addServerData Template File *@
 @(param: Any)
-<a href="/">Home</a>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Show All Server Data</title>
+  <link rel="stylesheet" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
+  <link rel="stylesheet" href="@routes.Assets.at("stylesheets/bootstrap-theme.min.css")">
+  <link rel="stylesheet" href="@routes.Assets.at("stylesheets/bootstrap-theme.min.css")">
+  <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")"></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  <script src="@routes.Assets.at("javascripts/bootstrap.min.js")"></script>
+  <link rel="stylesheet" href="@routes.Assets.at("stylesheets/IpM.css")">
+</head>
+<body>
+ <div class="navbar-wrapper">
+   <div class="container">
+     <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+       <div class="container">
+         <div class="navbar-header">
+           <a class="navbar-brand">IpM</a>
+         </div>
+         <div class="navbar-collapse collapse">
+           <ul class="nav navbar-nav">
+             <li class="active"><a href="/">Home</a></li>
+           </ul>
+         </div>
+       </div>
+     </div>
+   </div>
+   </div>
+
+	   <div class="jumbotron">
+		  <h1><center>Add Server Data</h1>
 
     @helper.form(action = routes.Application.addServerData()) {
-    	<label for= "conventionalName">Conventional Name</label>
-    	<input name="conventionalName" id="conventionalName"/>
+		<div class = "row">
+	  	    <div class="col-md-4">
+	  			<label for= "conventionalName">Conventional Name</label>
+	  		</div>
+	  		<div class="col-md-4">
+	  			<input name="conventionalName" id="conventionalName"/>
+	  		</div>
+    	</div>
+		<div class = "row">
+	  	    <div class="col-md-4">
     	<label for= "hostName">Host Name</label>
+	  		</div>
+	  	    <div class="col-md-4">
         <input name="hostName" id="hostName"/>
+	  		</div>
+    	</div>
+		<div class = "row">
+	  	    <div class="col-md-4">
     	<label for= "domain">Domain</label>
+	  		</div>
+	  	    <div class="col-md-4">
         <input name="domain" id="domain"/>
+	  		</div>
+    	</div>
+		<div class = "row">
+	  	    <div class="col-md-4">
     	<label for= "port">Port</label>
+	  		</div>
+	  	    <div class="col-md-4">
         <input name="port" id="port"/>
+	  		</div>
+    	</div>
+		<div class = "row">
+	  	    <div class="col-md-4">
     	<label for= "ipAddress">IP Address</label>
+	  		</div>
+	  	    <div class="col-md-4">
         <input name="ipAddress" id="ipAddress"/>
+	  		</div>
+    	</div>
+		<div class = "row">
+	  	    <div class="col-md-10">
+	  	    </div>
+	  	    <div class="col-md-2">
         <input name="submitButton" type="submit"/>
+	  	    </div>
+    	</div>
     }
+	   </div>
+
+</body>
+</html>
+
     
  

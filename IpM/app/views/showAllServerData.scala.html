@@ -31,10 +31,9 @@
    </div>
 	<form>
 	   <div class="jumbotron">
-		  <h1 for="cName"><center>Server Data</center></h1>
+		  <h1><center>Server Data</center></h1>
 	   </div>
 	</form>
-	<div class>
 <table id="IpMTable" class="table table-striped">
 @allServerData.map { serverData =>
   <tr><td> <span class="table-cell">"@serverData.conventionalName" is "@serverData.hostName.@serverData.domain:@serverData.port" <@serverData.ipAddress></span></td> 
