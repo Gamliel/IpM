@@ -13,18 +13,14 @@ create table server_data (
   constraint pk_server_data primary key (id))
 ;
 
-create sequence server_data_seq;
-
 
 
 
 # --- !Downs
 
-SET REFERENTIAL_INTEGRITY FALSE;
+SET FOREIGN_KEY_CHECKS=0;
 
-drop table if exists server_data;
+drop table server_data;
 
-SET REFERENTIAL_INTEGRITY TRUE;
-
-drop sequence if exists server_data_seq;
+SET FOREIGN_KEY_CHECKS=1;
 

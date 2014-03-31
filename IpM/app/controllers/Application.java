@@ -5,6 +5,7 @@ import static play.libs.Json.toJson;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import models.ServerData;
 import play.data.Form;
@@ -25,6 +26,7 @@ public class Application extends Controller {
     public static Result addServerData() {
         Form<ServerData> formData = form(ServerData.class).bindFromRequest();
         ServerData serverData = formData.get();
+        serverData.id = UUID.randomUUID().toString();
         serverData.save();
         return redirect(routes.Application.addServerDataForm());
     }
